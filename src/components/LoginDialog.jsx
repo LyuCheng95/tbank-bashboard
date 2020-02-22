@@ -15,6 +15,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Alert from '@material-ui/lab/Alert';
 import { login } from '../api';
 import Snackbar from '@material-ui/core/Snackbar';
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -71,6 +72,7 @@ export default function LoginDialog({
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [failureAlert, setFailureAlert] = useState(false);
+  const history = useHistory();
   const handleClickRegister = () => {
     handleClose();
     handleOpenRegister();
@@ -84,7 +86,10 @@ export default function LoginDialog({
         handleClose();
         setOpenSuccessAlert(true);
         setLogin(true);
-        setSuccessAlert('登录成功！');
+        setSuccessAlert('Login Successful!');
+        if (history.location.pathname !== '/dashboard') {
+          history.push('/dashboard');
+        }
       }
     });
   }
@@ -102,7 +107,7 @@ export default function LoginDialog({
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              登录
+              Login
             </Typography>
             <TextField
               variant="outlined"
@@ -110,7 +115,7 @@ export default function LoginDialog({
               required
               fullWidth
               id="email"
-              label="邮箱地址"
+              label="usename"
               name="username"
               autoComplete="username"
               autoFocus
@@ -122,7 +127,7 @@ export default function LoginDialog({
               required
               fullWidth
               name="password"
-              label="密码"
+              label="password"
               type="password"
               id="password"
               autoComplete="current-password"
@@ -130,7 +135,7 @@ export default function LoginDialog({
             />
             {failureAlert ? (
               <Alert className={classes.failureAlert} severity="error">
-                用户名或密码错误
+                Invalid username/password
               </Alert>
             ) : null}
             <Button
@@ -141,20 +146,20 @@ export default function LoginDialog({
               className={classes.submit}
               onClick={() => handleLogin(username, password)}
             >
-              登录
+              Login
             </Button>
             <Grid container>
-              <Grid item xs>
+              {/* <Grid item xs>
                 <Typography>
-                  忘记密码?
+                  Forget password?
                 </Typography>
-              </Grid>
+              </Grid> */}
               <Grid item>
                 <Typography
                   onClick={handleClickRegister}
                   className={classes.links}
                 >
-                  {"已有帐号？ 前去注册 >>"}
+                  {"Don't have an account? Register>>"}
                 </Typography>
               </Grid>
             </Grid>

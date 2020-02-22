@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useContext } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -7,46 +7,25 @@ import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import PersonIcon from '@material-ui/icons/Person';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import FastfoodIcon from '@material-ui/icons/Fastfood';
-import DeleteIcon from '@material-ui/icons/Delete';
-import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
-import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
-import {
-  Switch,
-  Route,
-  Link,
-  useHistory
-} from "react-router-dom";
-import Attendance from '../pages/Attendance';
-import Food from '../pages/Food';
-import Home from '../pages/Home';
-import Study from '../pages/Study';
-import Clean from '../pages/Clean';
-import LoginDialog from '../components/LoginDialog';
+import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
+import LocalAtmIcon from '@material-ui/icons/LocalAtm';
+import { useHistory, Route, Switch } from "react-router-dom";
+import Recommender from '../pages/Recommender';
+import Profile from '../pages/Profile';
+import Loan from '../pages/Loan';
+import OTPLoginDialog from '../components/OTPLoginDialog';
 import RegisterDialog from '../components/RegisterDialog';
+import LogoutDialog from '../components/LogoutDialog';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Button from '@material-ui/core/Button';
 import { useEffect } from 'react';
 import Header from '../components/Header';
 
@@ -57,6 +36,7 @@ const useStyles = makeStyles(theme => ({
     overflow: 'hidden',
     height: '100vh',
     display: 'flex',
+    backgroundColor: '#f0efea',
   },
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
@@ -139,10 +119,6 @@ const useStyles = makeStyles(theme => ({
       outline: 'none',
     },
   },
-  logoutDialogTitle: {
-    backgroundColor: '#3f51b5',
-    color: '#FFFFFF',
-  }
 }));
 
 export default function Dashboard(props) {
@@ -152,7 +128,7 @@ export default function Dashboard(props) {
   const [showRegisterDialog, setShowRegisterDialog] = React.useState(false);
   const [openSuccessAlert, setOpenSuccessAlert] = React.useState(false);
   const [successAlert, setSuccessAlert] = React.useState("");
-  const [login, setLogin] = React.useState(false);
+  const [login, setLogin] = React.useState(sessionStorage.getItem('username'));
   const [openLogoutDialog, setOpenLogoutDialog] = React.useState(false);
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -166,6 +142,8 @@ export default function Dashboard(props) {
   const handleLogout = () => {
     setOpenLogoutDialog(false);
     setLogin(false);
+    history.push('/');
+    sessionStorage.clear()
   };
   useEffect(() => {
     if (sessionStorage.getItem('username')) {
@@ -185,7 +163,7 @@ export default function Dashboard(props) {
         open={open}
         setOpen={setOpen}
       />
-      <LoginDialog
+      <OTPLoginDialog
         open={showLoginDialog}
         handleClose={() => setShowLoginDialog(false)}
         handleOpenRegister={() => setShowRegisterDialog(true)}
@@ -215,70 +193,42 @@ export default function Dashboard(props) {
         </div>
         <Divider />
         <List>
-          <ListItem button onClick={() => history.push('/')} >
+          <ListItem button onClick={() => history.push('/dashboard')} >
             <ListItemIcon>
-              <DashboardIcon />
+              <PermContactCalendarIcon />
             </ListItemIcon>
-            <ListItemText primary="主页" />
+            <ListItemText primary="Profile" />
           </ListItem>
-          <ListItem button onClick={() => history.push('/food')}>
+          <ListItem button onClick={() => history.push('/dashboard/recommender')}>
             <ListItemIcon>
-              <FastfoodIcon />
+              <ThumbUpAltIcon />
             </ListItemIcon>
-            <ListItemText primary="餐饮" />
+            <ListItemText primary="Recommender" />
           </ListItem>
-          <ListItem button onClick={() => history.push('/clean')}>
+          <ListItem button onClick={() => history.push('/dashboard/loan')}>
             <ListItemIcon>
-              <DeleteIcon />
+              <LocalAtmIcon />
             </ListItemIcon>
-            <ListItemText primary="卫生" />
-          </ListItem>
-          <ListItem button onClick={() => history.push('/study')}>
-            <ListItemIcon>
-              <LocalLibraryIcon />
-            </ListItemIcon>
-            <ListItemText primary="学习" />
-          </ListItem>
-          <ListItem button onClick={() => history.push('/attendance')}>
-            <ListItemIcon>
-              <PlaylistAddCheckIcon />
-            </ListItemIcon>
-            <ListItemText primary="出勤" />
+            <ListItemText primary="Loan" />
           </ListItem>
         </List>
       </Drawer>
       <main className={classes.content}>
         <Container maxWidth="lg" className={classes.container}>
-          <Home />
+          <Route exact path="/dashboard" component={Profile} />
+          <Route path="/dashboard/recommender" render={Recommender} />
+          <Route path="/dashboard/loan" render={Loan} />
         </Container>
         <Snackbar open={openSuccessAlert} autoHideDuration={3000} onClose={() => setOpenSuccessAlert(false)}>
           <Alert variant='filled' onClose={() => setOpenSuccessAlert(false)} severity="success">
             {successAlert}
           </Alert>
         </Snackbar>
-        <Dialog
-          open={openLogoutDialog}
-          onClose={() => setOpenLogoutDialog(false)}
-        >
-          <DialogTitle className={classes.logoutDialogTitle}>{"注销"}</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              是否要注销账号?
-          </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => setOpenLogoutDialog(false)} color="primary">
-              <Typography component="h2" variant="h6" >
-                取消
-              </Typography>
-            </Button>
-            <Button onClick={handleLogout} color="primary" autoFocus>
-              <Typography component="h2" variant="h6" >
-                登出
-              </Typography>
-            </Button>
-          </DialogActions>
-        </Dialog>
+        <LogoutDialog
+          setOpenLogoutDialog={setOpenLogoutDialog}
+          handleLogout={handleLogout}
+          openLogoutDialog={openLogoutDialog}
+        />
       </main>
     </div>
   );

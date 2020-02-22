@@ -103,6 +103,9 @@ const useStyles = makeStyles(theme => ({
     position: 'fixed',
     transition: 'height 1000ms'
   },
+  transparent: {
+    backgroundColor: 'transparent',
+  }
 }));
 
 export default function Header(props) {
@@ -132,8 +135,7 @@ export default function Header(props) {
     }
   };
   const appBarClasses = classNames({
-    [classes.transparent]: color === 'transparent',
-    [classes.white]: color === 'white',
+    [classes.transparent]: !show,
     [classes.appBar]: true,
     [classes.appBarShift]: open,
     [classes.appBarLanding]: landing
@@ -155,9 +157,9 @@ export default function Header(props) {
 
           )}
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            [Logo]
+            IS444
           </Typography>
-          {landing ? null : login ? (
+          {login ? (
             <>
               <div className={classes.usernameDiv}>
                 <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
@@ -168,7 +170,7 @@ export default function Header(props) {
               </div>
               <IconButton color="inherit"
                 className={classes.headerButton}
-                onClick={() => setOpenLogoutDialog('true')}
+                onClick={() => setOpenLogoutDialog(true)}
               >
                 <ExitToAppIcon />
               </IconButton>
@@ -176,7 +178,7 @@ export default function Header(props) {
           ) : (
               <IconButton color="inherit"
                 className={classes.headerButton}
-                onClick={() => handleOpenLoginDialog()}
+                onClick={() => handleOpenLoginDialog(true)}
               >
                 <PersonIcon />
               </IconButton>
@@ -185,6 +187,5 @@ export default function Header(props) {
       </AppBar>
     );
   }
-  return show ? render() : null
-    ;
+  return render();
 }

@@ -14,6 +14,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import { register } from '../api';
 import Alert from '@material-ui/lab/Alert';
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -68,6 +69,7 @@ export default function RegisterDialog({
   const [repeatPassword, setRepeatPassword] = useState("");
   const [failureAlert, setFailureAlert] = useState(false);
   const [error, setError] = useState(false);
+  const history = useHistory();
   useEffect(() => {
     if (repeatPassword == password) {
       setError(false);
@@ -84,7 +86,10 @@ export default function RegisterDialog({
         handleClose();
         setOpenSuccessAlert(true);
         setLogin(true)
-        setSuccessAlert('注册成功！');
+        setSuccessAlert('Registeration Successful');
+        if (history.location.pathname !== '/dashboard') {
+          history.push('/dashboard');
+        }
       }
     });
   }
@@ -106,7 +111,7 @@ export default function RegisterDialog({
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              注册
+              Register
             </Typography>
             <TextField
               variant="outlined"
@@ -114,7 +119,7 @@ export default function RegisterDialog({
               required
               fullWidth
               id="email"
-              label="邮箱地址"
+              label="username"
               name="email"
               autoComplete="xxx@xxx.com"
               autoFocus
@@ -126,7 +131,7 @@ export default function RegisterDialog({
               required
               fullWidth
               name="password"
-              label="密码"
+              label="password"
               type="password"
               id="password"
               autoComplete="current-password"
@@ -139,7 +144,7 @@ export default function RegisterDialog({
               required
               fullWidth
               name="password"
-              label="重复密码"
+              label="repeat password"
               type="password"
               id="password"
               autoComplete="current-password"
@@ -147,7 +152,7 @@ export default function RegisterDialog({
             />
             {failureAlert ? (
               <Alert className={classes.failureAlert} severity="error">
-                注册失败 
+                Registration Failed
               </Alert>
             ) : null}
             <Button
@@ -158,7 +163,7 @@ export default function RegisterDialog({
               className={classes.submit}
               onClick={() => handleRegister(username, password)}
             >
-              注册
+              Register
             </Button>
             <Grid container>
               <Grid item>
@@ -166,7 +171,7 @@ export default function RegisterDialog({
                   onClick={handleClickLogin}
                   className={classes.links}
                 >
-                  已有帐号？前去登录 >>
+                  Already have an account? Login >>
                 </Typography>
               </Grid>
             </Grid>

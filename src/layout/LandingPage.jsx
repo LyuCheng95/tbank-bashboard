@@ -15,9 +15,14 @@ import Typography from "@material-ui/core/Typography";
 import Parallax from "../components/Parallax.jsx";
 import Grid from '@material-ui/core/Grid';
 import Header from '../components/Header';
+import OTPLoginDialog from '../components/OTPLoginDialog';
+import RegisterDialog from '../components/RegisterDialog';
+import LogoutDialog from '../components/LogoutDialog';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
+import Dialog from '@material-ui/core/Dialog';
+import { useHistory } from "react-router-dom";
 
-
-const dashboardRoutes = [];
 const useStyles = makeStyles(theme => ({
   container: {
     zIndex: "12",
@@ -64,6 +69,19 @@ const useStyles = makeStyles(theme => ({
 export default function LandingPage(props) {
   const classes = useStyles();
   const { ...rest } = props;
+  const [showLoginDialog, setShowLoginDialog] = React.useState(false);
+  const [showRegisterDialog, setShowRegisterDialog] = React.useState(false);
+  const [openSuccessAlert, setOpenSuccessAlert] = React.useState(false);
+  const [successAlert, setSuccessAlert] = React.useState("");
+  const [login, setLogin] = React.useState(sessionStorage.getItem('username'));
+  const [openLogoutDialog, setOpenLogoutDialog] = React.useState(false);
+  const history = useHistory();
+  const handleLogout = () => {
+    setOpenLogoutDialog(false);
+    setLogin(false);
+    history.push('/');
+    sessionStorage.clear()
+  };
   return (
     <div>
       <Header
@@ -71,17 +89,26 @@ export default function LandingPage(props) {
         showOnScroll={{
           height: 550,
         }}
+        handleOpenLoginDialog={() => setShowLoginDialog(true)}
+        login={login}
+        setLogin={setLogin}
+        setOpenLogoutDialog = {() => setOpenLogoutDialog(true)}
       />
       <Parallax filter image={require("../assets/landing-bg.jpg")}>
         <div className={classes.container}>
           <Grid container>
             <Grid item xs={12} sm={12} md={6}>
-              <h1 className={classes.title}>Your Personalised Recommendor</h1>
+              <h1 className={classes.title}>Your Personalised Recommender</h1>
               <h4>
                 texttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttext
               </h4>
               <br />
-              <Button className={classes.startButton} variant='contained' color='secondary'>
+              <Button
+                className={classes.startButton}
+                variant='contained'
+                color='secondary'
+                onClick={() => setShowLoginDialog(true)}
+              >
                 <Typography variant='h6'>
                   Get Started
                 </Typography>
@@ -95,6 +122,32 @@ export default function LandingPage(props) {
           <div className={classes.placeholder} />
         </div>
       </div>
+      <OTPLoginDialog
+        open={showLoginDialog}
+        handleClose={() => setShowLoginDialog(false)}
+        handleOpenRegister={() => setShowRegisterDialog(true)}
+        setLogin={() => null}
+        setOpenSuccessAlert={setOpenSuccessAlert}
+        setSuccessAlert={setSuccessAlert}
+      />
+      <RegisterDialog
+        open={showRegisterDialog}
+        handleClose={() => setShowRegisterDialog(false)}
+        handleOpenLogin={() => setShowLoginDialog(true)}
+        setLogin={() => null}
+        setOpenSuccessAlert={setOpenSuccessAlert}
+        setSuccessAlert={setSuccessAlert}
+      />
+      <LogoutDialog
+        setOpenLogoutDialog={setOpenLogoutDialog}
+        handleLogout={handleLogout}
+        openLogoutDialog={openLogoutDialog}
+      />
+      <Snackbar open={openSuccessAlert} autoHideDuration={3000} onClose={() => setOpenSuccessAlert(false)}>
+        <Alert variant='filled' onClose={() => setOpenSuccessAlert(false)} severity="success">
+          {successAlert}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }
