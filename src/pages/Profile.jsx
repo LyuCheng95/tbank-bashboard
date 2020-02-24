@@ -6,6 +6,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 import { useHistory } from "react-router-dom";
+import ProfileTabPanel from '../components/ProfileTabPanel';
 const useStyles = makeStyles(theme => ({
   introCard: {
     height: '600px',
@@ -18,7 +19,7 @@ const useStyles = makeStyles(theme => ({
     margin: '0 auto',
     height: '150px',
     width: '150px',
-    fontSize: '100px',
+    fontSize: '80px',
     borderStyle: 'double',
     borderWidth: '5px'
   },
@@ -28,13 +29,13 @@ const useStyles = makeStyles(theme => ({
     color: '#555',
     transform: 'translateY(-50px)',
   },
-  occupation:{
+  occupation: {
     fontSize: '0.75rem',
     fontWeight: 'bold',
     textAlign: 'center',
     color: '#777',
     transform: 'translateY(-43px)'
-  }
+  },
 }));
 
 export default function Profile() {
@@ -59,9 +60,8 @@ export default function Profile() {
             {profile.profile.occupation.toUpperCase()}
           </Typography>
         </Grid>
-        <Grid container>
-          <Grid item xs={7}>
-          </Grid>
+        <Grid item>
+          <ProfileTabPanel />
         </Grid>
       </Card>
     </Grid>

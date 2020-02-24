@@ -25,15 +25,15 @@ export default function LogoutDialog(props) {
       <DialogContent>
         <DialogContentText>
           Do you want to logout?
-          </DialogContentText>
+        </DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={() => props.setOpenLogoutDialog(false)} variant='contained' color="primary">
           No
-            </Button>
+        </Button>
         <Button onClick={props.handleLogout} color="secondary" variant='contained' autoFocus>
           Yes
-            </Button>
+        </Button>
       </DialogActions>
     </Dialog>
   );
