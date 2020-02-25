@@ -60,8 +60,13 @@ const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: theme.palette.background.paper,
     width: 500,
-    margin: '0 auto',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    marginTop: '-10px'
   },
+  swipeableViews:{
+    height: '290px'
+  }
 }));
 
 export default function ProfileTabPanel() {
@@ -112,6 +117,7 @@ export default function ProfileTabPanel() {
         axis={'x'}
         index={value}
         onChangeIndex={handleChangeIndex}
+        className={classes.swipeableViews}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
           <Grid container direction='column' spacing={5}>

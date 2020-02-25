@@ -12,7 +12,7 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
-import { register } from '../api';
+// import { register } from '../api';
 import Alert from '@material-ui/lab/Alert';
 import { useHistory } from "react-router-dom";
 
@@ -78,20 +78,20 @@ export default function RegisterDialog({
     }
   },[repeatPassword]);
   const handleRegister = (username, password) => {
-    register(username, password).then(response => {
-      if (response.data.status == 0) {
-        setFailureAlert(true)
-      } else {
-        sessionStorage.setItem('username', username)
-        handleClose();
-        setOpenSuccessAlert(true);
-        setLogin(true)
-        setSuccessAlert('Registeration Successful');
-        if (history.location.pathname !== '/dashboard') {
-          history.push('/dashboard');
-        }
-      }
-    });
+    // register(username, password).then(response => {
+    //   if (response.data.status == 0) {
+    //     setFailureAlert(true)
+    //   } else {
+    //     sessionStorage.setItem('username', username)
+    //     handleClose();
+    //     setOpenSuccessAlert(true);
+    //     setLogin(true)
+    //     setSuccessAlert('Registeration Successful');
+    //     if (history.location.pathname !== '/dashboard') {
+    //       history.push('/dashboard');
+    //     }
+    //   }
+    // });
   }
   const handleClickLogin = () => {
     handleClose();

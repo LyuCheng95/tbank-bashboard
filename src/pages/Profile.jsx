@@ -1,16 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
-import { useHistory } from "react-router-dom";
 import ProfileTabPanel from '../components/ProfileTabPanel';
+import { getMonthlyBalanceTrend } from '../tBankApi';
+import { ResponsiveLine } from '@nivo/line'
 const useStyles = makeStyles(theme => ({
   introCard: {
-    height: '600px',
-    marginTop: '100px',
+    marginTop: '80px',
     overflow: 'visible',
     borderRadius: '40px'
   },
@@ -40,30 +39,101 @@ const useStyles = makeStyles(theme => ({
 
 export default function Profile() {
   const classes = useStyles();
-  const history = useHistory();
   const profile = JSON.parse(sessionStorage.getItem('profile'));
+  const [balanceHistory, setBalanceHistory] = useState([])
+  useEffect(() => {
+    const userID = sessionStorage.getItem('username');
+    const PIN = sessionStorage.getItem('password');
+    const OTP = sessionStorage.getItem('OTP');
+    const accountID = sessionStorage.getItem('accountID');
+  }, []);
+  const CustomSymbol = ({ size, color, borderWidth, borderColor }) => (
+    <g>
+      <circle fill="#fff" r={size / 2} strokeWidth={borderWidth} stroke={borderColor} />
+      <circle
+        r={size / 5}
+        strokeWidth={borderWidth}
+        stroke={borderColor}
+        fill={color}
+        fillOpacity={0.35}
+      />
+    </g>
+  );
+  const data = JSON.parse(sessionStorage.getItem('balanceHistory')['balance']);
+  console.log(data);
+  const balanceLineChart = data => {
+    return (
+      <ResponsiveLine
+        width={500}
+        height={500}
+        margin={{ top: 90, right: 20, bottom: 10, left: 80 }}
+        animate={true}
+        enableSlices={'x'}
+        curve="monotoneX"
+        data={data}
+        xScale={{
+          type: 'time',
+          format: '%Y-%m-%d',
+          precision: 'day',
+        }}
+        xFormat="time:%Y-%m-%d"
+        yScale={{
+          type: 'linear',
+        }}
+        axisLeft={{
+          legend: 'linear scale',
+          legendOffset: 12,
+        }}
+        axisBottom={{
+          format: '%b %d',
+          tickValues: 'every 2 days',
+          legend: 'time scale',
+          legendOffset: -12,
+        }}
+        curve='monotoneX'
+        enablePointLabel={true}
+        pointSymbol={CustomSymbol}
+        pointSize={16}
+        pointBorderWidth={1}
+        pointBorderColor={{
+          from: 'color',
+          modifiers: [['darker', 0.3]],
+        }}
+        useMesh={true}
+        enableSlices={false}
+      />
+    )
+  };
   return (
-    <Grid container direction="column" spacing={5}>
-      <Card className={classes.introCard}>
-        <Grid item>
-          <Avatar className={classes.avatar}>
-            {profile.givenName.charAt(0) + profile.familyName.charAt(0)}
-          </Avatar>
+    <Card className={classes.introCard}>
+      <Grid container direction="row">
+        <Grid item xs={6}>
+          {balanceLineChart([])}
         </Grid>
-        <Grid item>
-          <Typography className={classes.name} variant={'h5'}>
-            {profile.givenName + ' ' + profile.familyName}
-          </Typography>
+        <Grid item xs={6}>
+          <Grid container direction="column" >
+            <Grid item>
+              <Avatar className={classes.avatar}>
+                {profile.givenName.charAt(0) + profile.familyName.charAt(0)}
+              </Avatar>
+            </Grid>
+            <Grid item>
+              <Typography className={classes.name} variant={'h5'}>
+                {profile.givenName + ' ' + profile.familyName}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography className={classes.occupation} >
+                {profile.profile.occupation.toUpperCase()}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <ProfileTabPanel />
+            </Grid>
+          </Grid>
+
         </Grid>
-        <Grid item>
-          <Typography className={classes.occupation} >
-            {profile.profile.occupation.toUpperCase()}
-          </Typography>
-        </Grid>
-        <Grid item>
-          <ProfileTabPanel />
-        </Grid>
-      </Card>
-    </Grid>
+      </Grid>
+    </Card>
   );
 }

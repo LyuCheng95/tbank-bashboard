@@ -16,11 +16,10 @@ import Parallax from "../components/Parallax.jsx";
 import Grid from '@material-ui/core/Grid';
 import Header from '../components/Header';
 import OTPLoginDialog from '../components/OTPLoginDialog';
-import RegisterDialog from '../components/RegisterDialog';
+// import RegisterDialog from '../components/RegisterDialog';
 import LogoutDialog from '../components/LogoutDialog';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
-import Dialog from '@material-ui/core/Dialog';
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
@@ -130,14 +129,14 @@ export default function LandingPage(props) {
         setOpenSuccessAlert={setOpenSuccessAlert}
         setSuccessAlert={setSuccessAlert}
       />
-      <RegisterDialog
+      {/* <RegisterDialog
         open={showRegisterDialog}
         handleClose={() => setShowRegisterDialog(false)}
         handleOpenLogin={() => setShowLoginDialog(true)}
         setLogin={() => null}
         setOpenSuccessAlert={setOpenSuccessAlert}
         setSuccessAlert={setSuccessAlert}
-      />
+      /> */}
       <LogoutDialog
         setOpenLogoutDialog={setOpenLogoutDialog}
         handleLogout={handleLogout}

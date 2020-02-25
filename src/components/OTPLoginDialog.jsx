@@ -12,7 +12,7 @@ import Container from '@material-ui/core/Container';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Alert from '@material-ui/lab/Alert';
-import { requestOTP, getCustomerDetails} from '../tBankApi';
+import { requestOTP, getCustomerDetails, getCustomerAccounts, getMonthlyBalanceTrend } from '../tBankApi';
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
@@ -82,27 +82,53 @@ export default function OTPLoginDialog({
       setTimeout(() => { setFailureAlert(null) }, 10000);
     }
   }, [failureAlert])
-  const handleClickRegister = () => {
-    handleClose();
-    handleOpenRegister();
-  };
+  // const handleClickRegister = () => {
+  //   handleClose();
+  //   handleOpenRegister();
+  // };
   const handleLogin = (username, password) => {
-    getCustomerDetails(username, password, OTP).then(data => {
+    const p1 = getCustomerDetails(username, password, OTP).then(data => {
       const response = data.Content.ServiceResponse;
       if (response.ServiceRespHeader.ErrorText === 'invocation successful') {
-        sessionStorage.setItem('username', username)
+        sessionStorage.setItem('username', username);
+        sessionStorage.setItem('password', password);
+        sessionStorage.setItem('customerID', response.CDMCustomer.customer.customerID);
         sessionStorage.setItem('profile', JSON.stringify(response.CDMCustomer));
+        sessionStorage.setItem('OTP', OTP);
         handleClose();
         setLogin(true);
         setSuccessAlert('Login Successful!');
         setOpenSuccessAlert(true);
-        if (history.location.pathname !== '/dashboard') {
-          history.push('/dashboard');
-        }
       } else {
         setFailureAlert('Invalid username/password/OTP');
       }
     });
+    const p2 = getCustomerAccounts(username, password, OTP).then(data => {
+      const response = data.Content.ServiceResponse;
+      if (response.ServiceRespHeader.ErrorText === 'invocation successful') {
+        const accountPromises = response.AccountList.account.map(account => {
+          if (account.accountID) {
+            return getMonthlyBalanceTrend(username, password, OTP, account.accountID, 6).then(data => {
+              const balanceResponse = data.Content.ServiceResponse;
+              if (balanceResponse.ServiceRespHeader.ErrorText === 'invocation successful') {
+                let balances = balanceResponse.TrendData.MonthEndBalance;
+                balances.push(balanceResponse.TrendData.CurrentMonth);
+                return { id: account.accountID, data: balances };
+              }
+            })
+          }
+        });
+        Promise.all(accountPromises).then(values => {
+          sessionStorage.setItem('balanceHistory', '{"balance": [' + values.map(obj => JSON.stringify(obj)).toString() + ']}');
+        })
+      }
+    });
+    Promise.all([p1, p2]).then(() => {
+      console.log(history);
+      if (history.location.pathname !== '/dashboard') {
+        history.push('/dashboard');
+      }
+    })
   }
   const handleOTP = (username, password) => {
     requestOTP(username, password).then(data => {
@@ -204,12 +230,12 @@ export default function OTPLoginDialog({
             >
               Login
             </Button>
-            <Typography
+            {/* <Typography
               onClick={handleClickRegister}
               className={classes.links}
             >
               {"Don't have an account? Register>>"}
-            </Typography>
+            </Typography> */}
           </div>
         </Container>
       </Dialog>
