@@ -118,13 +118,12 @@ export default function OTPLoginDialog({
             })
           }
         });
-        Promise.all(accountPromises).then(values => {
+        return Promise.all(accountPromises).then(values => {
           sessionStorage.setItem('balanceHistory', '{"balance": [' + values.map(obj => JSON.stringify(obj)).toString() + ']}');
         })
       }
     });
     Promise.all([p1, p2]).then(() => {
-      console.log(history);
       if (history.location.pathname !== '/dashboard') {
         history.push('/dashboard');
       }

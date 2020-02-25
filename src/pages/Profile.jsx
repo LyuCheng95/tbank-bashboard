@@ -59,8 +59,14 @@ export default function Profile() {
       />
     </g>
   );
-  const data = JSON.parse(sessionStorage.getItem('balanceHistory')['balance']);
-  console.log(data);
+  let data = JSON.parse(sessionStorage.getItem('balanceHistory'))['balance'];
+  data = data.map(acc => ({
+    id: acc.id,
+    data: acc.data.map(mon => ({
+      x: mon.Year_Month,
+      y: parseInt(mon.Balance)
+    }))
+  }));
   const balanceLineChart = data => {
     return (
       <ResponsiveLine
@@ -81,13 +87,13 @@ export default function Profile() {
           type: 'linear',
         }}
         axisLeft={{
-          legend: 'linear scale',
+          legend: 'SGD',
           legendOffset: 12,
         }}
         axisBottom={{
           format: '%b %d',
           tickValues: 'every 2 days',
-          legend: 'time scale',
+          legend: 'Time',
           legendOffset: -12,
         }}
         curve='monotoneX'
@@ -100,7 +106,41 @@ export default function Profile() {
           modifiers: [['darker', 0.3]],
         }}
         useMesh={true}
-        enableSlices={false}
+        enableSlices={'x'}
+        sliceTooltip={({ slice }) => (
+          <div
+            style={{
+              background: 'white',
+              padding: '9px 12px',
+              border: '1px solid #ccc',
+            }}
+          >
+            {slice.points.map(point => {
+              return (
+                <div
+                  key={point.id}
+                  style={{
+                    color: point.serieColor,
+                    padding: '3px 0',
+                  }}
+                >
+                  <strong>
+                    Account:
+                  </strong>
+                  <strong>
+                    {point.serieId.substr(point.serieId.length - 4)}
+                  </strong>
+                  <br />
+                  Time:
+                  {point.data.xFormatted}
+                  <br />
+                  balance:
+                  ${point.data.yFormatted}
+                </div>
+              );
+            })}
+          </div>
+        )}
       />
     )
   };
@@ -108,7 +148,7 @@ export default function Profile() {
     <Card className={classes.introCard}>
       <Grid container direction="row">
         <Grid item xs={6}>
-          {balanceLineChart([])}
+          {balanceLineChart(data)}
         </Grid>
         <Grid item xs={6}>
           <Grid container direction="column" >
@@ -131,7 +171,6 @@ export default function Profile() {
               <ProfileTabPanel />
             </Grid>
           </Grid>
-
         </Grid>
       </Grid>
     </Card>
