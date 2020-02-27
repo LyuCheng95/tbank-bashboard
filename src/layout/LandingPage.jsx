@@ -26,8 +26,6 @@ const useStyles = makeStyles(theme => ({
   container: {
     zIndex: "12",
     color: "#FFFFFF",
-    paddingRight: "60px",
-    paddingLeft: "60px",
     marginRight: "auto",
     marginLeft: "auto",
     width: "100%",
@@ -62,7 +60,10 @@ const useStyles = makeStyles(theme => ({
   },
   startButton: {
     height: '50px'
-  }
+  },
+  titleContainer: {
+    padding: "0 80px"
+  },
 }));
 
 export default function LandingPage(props) {
@@ -95,7 +96,7 @@ export default function LandingPage(props) {
       />
       <Parallax filter image={require("../assets/landing-bg.jpg")}>
         <div className={classes.container}>
-          <Grid container>
+          <Grid container className={classes.titleContainer}>
             <Grid item xs={12} sm={12} md={6}>
               <h1 className={classes.title}>Your Personalised Recommender</h1>
               <h4>
