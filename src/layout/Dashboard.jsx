@@ -3,9 +3,6 @@ import React, { useContext } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import Box from '@material-ui/core/Box';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
@@ -21,6 +18,7 @@ import { useHistory, Route, Switch } from "react-router-dom";
 import Recommender from '../pages/Recommender';
 import Profile from '../pages/Profile';
 import Loan from '../pages/Loan';
+import Loading from '../pages/Loading';
 import OTPLoginDialog from '../components/OTPLoginDialog';
 import RegisterDialog from '../components/RegisterDialog';
 import LogoutDialog from '../components/LogoutDialog';
@@ -216,8 +214,9 @@ export default function Dashboard(props) {
       <main className={classes.content}>
         <Container maxWidth="lg" className={classes.container}>
           <Route exact path="/dashboard" component={Profile} />
-          <Route path="/dashboard/recommender" render={Recommender} />
-          <Route path="/dashboard/loan" render={Loan} />
+          <Route path="/dashboard/recommender" component={Recommender} />
+          <Route path="/dashboard/loan" component={Loan} />
+          <Route path="/dashboard/loading" component={Loading} />
         </Container>
         <Snackbar open={openSuccessAlert} autoHideDuration={3000} onClose={() => setOpenSuccessAlert(false)}>
           <Alert variant='filled' onClose={() => setOpenSuccessAlert(false)} severity="success">

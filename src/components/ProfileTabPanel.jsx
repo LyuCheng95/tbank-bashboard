@@ -64,7 +64,7 @@ const useStyles = makeStyles(theme => ({
     marginLeft: 'auto',
     marginTop: '-10px'
   },
-  swipeableViews:{
+  swipeableViews: {
     height: '290px'
   }
 }));
@@ -153,32 +153,32 @@ export default function ProfileTabPanel() {
         <TabPanel value={value} index={1} dir={theme.direction}>
           <Grid container direction='column' spacing={2} alignItems="center">
             <Grid item >
-              {gridTextField('Local Number', '93411789', <PhoneIcon/>)}
+              {gridTextField('Local Number', '93411789', <PhoneIcon />)}
             </Grid>
             <Grid item >
-              {gridTextField('Country Code', '+65', <DialpadIcon/>)}
+              {gridTextField('Country Code', '+65', <DialpadIcon />)}
             </Grid>
             <Grid item >
-              {gridTextField('Email', 'lyuch000@gmail.com', <EmailIcon/>)}
+              {gridTextField('Email', 'lyuch000@gmail.com', <EmailIcon />)}
             </Grid>
             <Grid item >
-              {gridTextField('Fax', '', <PrintIcon/>)}
+              {gridTextField('Fax', '', <PrintIcon />)}
             </Grid>
           </Grid>
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
           <Grid container direction='column' spacing={2} alignItems="center">
             <Grid item >
-              {gridTextField('Address', 'Li Hwan', <BusinessIcon/>)}
+              {gridTextField('Address', 'Li Hwan', <BusinessIcon />)}
             </Grid>
             <Grid item >
-              {gridTextField('Address', 'Terrace', <BusinessIcon/>)}
+              {gridTextField('Address', 'Terrace', <BusinessIcon />)}
             </Grid>
             <Grid item >
-              {gridTextField('Country', 'Singapore', <PlaceIcon/>)}
+              {gridTextField('Country', 'Singapore', <PlaceIcon />)}
             </Grid>
             <Grid item >
-              {gridTextField('Postal Code', '556980', <EmailIcon/>)}
+              {gridTextField('Postal Code', '556980', <EmailIcon />)}
             </Grid>
           </Grid>
         </TabPanel>

@@ -5,7 +5,6 @@ import Card from '@material-ui/core/Card';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 import ProfileTabPanel from '../components/ProfileTabPanel';
-import { getMonthlyBalanceTrend } from '../tBankApi';
 import { ResponsiveLine } from '@nivo/line'
 const useStyles = makeStyles(theme => ({
   introCard: {
@@ -35,6 +34,13 @@ const useStyles = makeStyles(theme => ({
     color: '#777',
     transform: 'translateY(-43px)'
   },
+  graphTitle:{
+    fontSize: "20px",
+    textAlign: "center",
+    fontFamily: "Roboto Slab",
+    marginTop: "15px",
+    marginBottom: "-15px"
+  }
 }));
 
 export default function Profile() {
@@ -148,6 +154,9 @@ export default function Profile() {
     <Card className={classes.introCard}>
       <Grid container direction="row">
         <Grid item xs={6}>
+          <div className={classes.graphTitle}>
+            Monthly balance
+          </div>
           {balanceLineChart(data)}
         </Grid>
         <Grid item xs={6}>

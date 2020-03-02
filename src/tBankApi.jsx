@@ -7,6 +7,13 @@ const requestOTP = async (userID, PIN) => {
   return data;
 };
 
+const loginCustomer = async (userID, PIN, OTP) => {
+  const headerStr = JSON.stringify({ serviceName: "loginCustomer", userID: userID, PIN: PIN, OTP: OTP });
+  const response = await axios.post(serverEndPoint + "Header=" + headerStr);
+  const data = await response.data;
+  return data;
+};
+
 const getCustomerDetails = async (userID, PIN, OTP) => {
   const headerStr = JSON.stringify({ serviceName: "getCustomerDetails", userID: userID, PIN: PIN, OTP: OTP });
   const response = await axios.post(serverEndPoint + "Header=" + headerStr);
@@ -20,13 +27,55 @@ const getMonthlyBalanceTrend = async (userID, PIN, OTP, accountID, numMonths) =>
   const response = await axios.post(serverEndPoint + "Header=" + headerStr + "&Content=" + contentStr);
   const data = await response.data;
   return data;
-}
+};
 
 const getCustomerAccounts = async (userID, PIN, OTP) => {
   const headerStr = JSON.stringify({ serviceName: "getCustomerAccounts", userID: userID, PIN: PIN, OTP: OTP });
   const response = await axios.post(serverEndPoint + "Header=" + headerStr);
   const data = await response.data;
   return data;
-}
+};
 
-export { requestOTP, getCustomerDetails, getMonthlyBalanceTrend, getCustomerAccounts };
+const getAllProductDetails = async (userID, PIN, OTP, bankID) => {
+  const headerStr = JSON.stringify({ serviceName: "getAllProductDetails", userID: userID, PIN: PIN, OTP: OTP });
+  const contentStr = JSON.stringify({ Content: { "bankID": bankID } });
+  const response = await axios.post(serverEndPoint + "Header=" + headerStr + "&Content=" + contentStr);
+  const data = await response.data;
+  return data;
+};
+
+const calculateLoanInstallment = async (userID, PIN, OTP, principle, productID, numberOfMonths) => {
+  const headerStr = JSON.stringify({ serviceName: "calculateLoanInstallment", userID: userID, PIN: PIN, OTP: OTP });
+  const contentStr = JSON.stringify({ "principle": principle, "productID": productID, "numberOfMonths": numberOfMonths });
+  const response = await axios.post(serverEndPoint + "Header=" + headerStr + "&Content=" + contentStr);
+  const data = await response.data;
+  return data;
+};
+
+const applyForLoan = async (userID, PIN, OTP, loanAmount, loanPurpose, productID, numberOfMonths, settlementAccount, assetValue, currency, title) => {
+  const headerStr = JSON.stringify({ serviceName: "applyForLoan", userID: userID, PIN: PIN, OTP: OTP });
+  const contentStr = JSON.stringify({
+    "loanAmount": loanAmount,
+    "loanPurpose": loanPurpose,
+    "productID": productID,
+    "numberOfMonths": numberOfMonths,
+    "settlementAccount": settlementAccount,
+    "assetValue": assetValue,
+    "currency": currency,
+    "title": title
+  });
+  const response = await axios.post(serverEndPoint + "Header=" + headerStr + "&Content=" + contentStr);
+  const data = await response.data;
+  return data;
+};
+
+export {
+  requestOTP,
+  loginCustomer,
+  getCustomerDetails,
+  getMonthlyBalanceTrend,
+  getCustomerAccounts,
+  getAllProductDetails,
+  calculateLoanInstallment,
+  applyForLoan
+};

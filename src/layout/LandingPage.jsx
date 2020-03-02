@@ -21,6 +21,9 @@ import LogoutDialog from '../components/LogoutDialog';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import { useHistory } from "react-router-dom";
+import LoanService from "../assets/LoanService.jpg";
+import PersonalProfile from "../assets/PersonalProfile.jpg";
+import RecommendationEngine from "../assets/RecommendationEngine.jpg";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -29,6 +32,16 @@ const useStyles = makeStyles(theme => ({
     marginRight: "auto",
     marginLeft: "auto",
     width: "100%",
+  },
+  infoContainer: {
+    zIndex: "12",
+    color: "#FFFFFF",
+    marginRight: "auto",
+    marginLeft: "auto",
+    width: "100%",
+    overflow: "hidden",
+    borderRadius: "5px",
+
   },
   title: {
     // ...title,
@@ -64,6 +77,36 @@ const useStyles = makeStyles(theme => ({
   titleContainer: {
     padding: "0 80px"
   },
+  featureBox: {
+    width: "100%",
+    position: "relative",
+    display: "inline-block",
+    "&:hover": {
+      opacity: '0.8',
+      color: "black"
+    }
+  },
+  featurePicture: {
+    width: "100%",
+  },
+  textBox: {
+    position: "absolute",
+    zIndex: "999",
+    margin: "0 auto",
+    left: "0",
+    right: "0",
+    top: "25%",
+    fontSize: "100px",
+    textAlign: "center",
+  },
+  text: {
+    margin: "0",
+    textAlign: "center",
+  },
+  whiteBox: {
+    display: "inline-block",
+    borderStyle: "double"
+  }
 }));
 
 export default function LandingPage(props) {
@@ -92,7 +135,7 @@ export default function LandingPage(props) {
         handleOpenLoginDialog={() => setShowLoginDialog(true)}
         login={login}
         setLogin={setLogin}
-        setOpenLogoutDialog = {() => setOpenLogoutDialog(true)}
+        setOpenLogoutDialog={() => setOpenLogoutDialog(true)}
       />
       <Parallax filter image={require("../assets/landing-bg.jpg")}>
         <div className={classes.container}>
@@ -100,7 +143,7 @@ export default function LandingPage(props) {
             <Grid item xs={12} sm={12} md={6}>
               <h1 className={classes.title}>Your Personalised Recommender</h1>
               <h4>
-                texttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttext
+                Provide personal, intelligent recommendations.
               </h4>
               <br />
               <Button
@@ -118,8 +161,31 @@ export default function LandingPage(props) {
         </div>
       </Parallax>
       <div className={classNames(classes.main, classes.mainRaised)}>
-        <div className={classes.container}>
-          <div className={classes.placeholder} />
+        <div className={classes.infoContainer}>
+          <div className={classes.featureBox}>
+            <img className={classes.featurePicture} src={PersonalProfile} />
+            <div className={classes.textBox}>
+              <div className={classes.whiteBox}>
+                <h2 className={classes.text}>Personal Profile</h2>
+              </div>
+            </div>
+          </div>
+          <div className={classes.featureBox}>
+            <img className={classes.featurePicture} src={RecommendationEngine} />
+            <div className={classes.textBox}>
+              <div className={classes.whiteBox}>
+                <h2 className={classes.text}>Recommendation Engine</h2>
+              </div>
+            </div>
+          </div>
+          <div className={classes.featureBox}>
+            <img className={classes.featurePicture} src={LoanService} />
+            <div className={classes.textBox}>
+              <div className={classes.whiteBox}>
+                <h2 className={classes.text}>Loan Service</h2>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <OTPLoginDialog
