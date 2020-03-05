@@ -8,13 +8,14 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import LoanApplicationPanel from '../components/LoanApplicationPanel';
 import LoanRepaymentPanel from '../components/LoanRepaymentPanel';
+import OTPDialog from "../components/OTPDialog";
 const useStyles = makeStyles(theme => ({
   loanCard: {
     marginTop: "80px",
     overflow: "visible",
     borderRadius: "40px",
   },
-  tabs:{
+  tabs: {
     height: "60px"
   }
 }))
@@ -41,6 +42,7 @@ function a11yProps(index) {
 }
 export default function Loan() {
   const [value, setValue] = React.useState(0);
+  const [OTPDialogOpen, setOTPDialogOpen] = React.useState(false)
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -63,11 +65,19 @@ export default function Loan() {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <LoanApplicationPanel />
+        <LoanApplicationPanel
+          setOTPDialogOpen={setOTPDialogOpen}
+        />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <LoanRepaymentPanel />
+        <LoanRepaymentPanel
+          setOTPDialogOpen={setOTPDialogOpen}
+        />
       </TabPanel>
+      <OTPDialog
+        open={OTPDialogOpen}
+        handleClose={() => setOTPDialogOpen(false)}
+      />
     </Card>
   );
 }

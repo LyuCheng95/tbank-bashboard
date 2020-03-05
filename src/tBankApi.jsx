@@ -69,6 +69,21 @@ const applyForLoan = async (userID, PIN, OTP, loanAmount, loanPurpose, productID
   return data;
 };
 
+const getLoanAccountDetails = async (userID, PIN, OTP, accountID) => {
+  const headerStr = JSON.stringify({ serviceName: "getLoanAccountDetails", userID: userID, PIN: PIN, OTP: OTP });
+  const contentStr = JSON.stringify({ "Content": {"accountID": accountID}});
+  const response = await axios.post(serverEndPoint + "Header=" + headerStr + "&Content=" + contentStr);
+  const data = await response.data;
+  return data;
+};
+
+const calculateFullLoanRepayment = async (userID, PIN, OTP, accountID) => {
+  const headerStr = JSON.stringify({ serviceName: "calculateFullLoanRepayment", userID: userID, PIN: PIN, OTP: OTP });
+  const contentStr = JSON.stringify({ "Content": {"accountID": accountID}});
+  const response = await axios.post(serverEndPoint + "Header=" + headerStr + "&Content=" + contentStr);
+  const data = await response.data;
+  return data;
+};
 export {
   requestOTP,
   loginCustomer,
@@ -77,5 +92,7 @@ export {
   getCustomerAccounts,
   getAllProductDetails,
   calculateLoanInstallment,
-  applyForLoan
+  applyForLoan,
+  getLoanAccountDetails,
+  calculateFullLoanRepayment,
 };

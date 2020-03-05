@@ -41,10 +41,8 @@ const useStyles = makeStyles(theme => ({
     width: "100%",
     overflow: "hidden",
     borderRadius: "5px",
-
   },
   title: {
-    // ...title,
     display: "inline-block",
     position: "relative",
     marginTop: "30px",
@@ -96,7 +94,7 @@ const useStyles = makeStyles(theme => ({
     left: "0",
     right: "0",
     top: "25%",
-    fontSize: "100px",
+    fontSize: "70px",
     textAlign: "center",
   },
   text: {
@@ -174,7 +172,7 @@ export default function LandingPage(props) {
             <img className={classes.featurePicture} src={RecommendationEngine} />
             <div className={classes.textBox}>
               <div className={classes.whiteBox}>
-                <h2 className={classes.text}>Recommendation Engine</h2>
+                <h2 className={classes.text}>Recommendation</h2>
               </div>
             </div>
           </div>

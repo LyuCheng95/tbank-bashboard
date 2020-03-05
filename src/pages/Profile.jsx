@@ -128,6 +128,7 @@ export default function Profile() {
                   style={{
                     color: point.serieColor,
                     padding: '3px 0',
+                    fontSize: "0.7rem"
                   }}
                 >
                   <strong>

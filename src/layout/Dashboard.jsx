@@ -191,7 +191,7 @@ export default function Dashboard(props) {
         </div>
         <Divider />
         <List>
-          <ListItem button onClick={() => history.push('/dashboard')} >
+          <ListItem button onClick={() => history.push('/dashboard/loading')} >
             <ListItemIcon>
               <PermContactCalendarIcon />
             </ListItemIcon>
