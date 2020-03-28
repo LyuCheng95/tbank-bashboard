@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
@@ -14,6 +15,7 @@ import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import { calculateLoanInstallment, applyForLoan } from '../tBankApi';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
+import queryString from 'query-string';
 const useStyles = makeStyles(theme => ({
   formControl: {
     width: '180px',
@@ -74,7 +76,7 @@ export default function LoanApplicationPanel(props) {
   const [maturityDate, setMaturityDate] = React.useState("");
   const [openSuccessAlert, setOpenSuccessAlert] = React.useState(false);
   const [successAlert, setSuccessAlert] = React.useState("");
-
+  const history = useHistory();
   const detailsRef = useRef();
   const accountsRef = useRef([]);
   const placeHolder = { ProductName: "", MinOpeningBalance: 0, PenaltyRate: 0, RepaymentPenaltyThreshold: 0, InterestRate: 0 }
@@ -102,7 +104,21 @@ export default function LoanApplicationPanel(props) {
     loanInfo.push(placeHolder);
     setLoanInfo(loanInfo);
     accountsRef.current = JSON.parse(sessionStorage.getItem("accounts"))
-  }, []);
+  }, [])
+  useEffect(() => {
+    if (loanInfo) {
+      if (queryString.parse(history.location.search).type) {
+        setLoanType(queryString.parse(history.location.search).type);
+      }
+      if (queryString.parse(history.location.search).amount) {
+        setAmount(queryString.parse(history.location.search).amount);
+      }
+      if (queryString.parse(history.location.search).term) {
+        setPeriod(queryString.parse(history.location.search).term);
+      }
+    }
+  }, [loanInfo])
+>>>>>>> recommendation
   const handleChangeLoan = v => {
     setLoanType(v);
     ltvRef.current = loanInfo.filter(type => type.ProductName === v)[0].MaxLtvRatio

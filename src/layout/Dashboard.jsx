@@ -15,7 +15,7 @@ import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import { useHistory, Route, Switch } from "react-router-dom";
-import Recommender from '../pages/Recommender';
+import Accounts from '../pages/Accounts';
 import Profile from '../pages/Profile';
 import Loan from '../pages/Loan';
 import Loading from '../pages/Loading';
@@ -26,6 +26,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import { useEffect } from 'react';
 import Header from '../components/Header';
+import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 
 const drawerWidth = 240;
 
@@ -197,11 +198,11 @@ export default function Dashboard(props) {
             </ListItemIcon>
             <ListItemText primary="Profile" />
           </ListItem>
-          <ListItem button onClick={() => history.push('/dashboard/recommender')}>
+          <ListItem button onClick={() => history.push('/dashboard/account')}>
             <ListItemIcon>
-              <ThumbUpAltIcon />
+              <AccountBalanceWalletIcon />
             </ListItemIcon>
-            <ListItemText primary="Recommender" />
+            <ListItemText primary="Accounts" />
           </ListItem>
           <ListItem button onClick={() => history.push('/dashboard/loan')}>
             <ListItemIcon>
@@ -214,7 +215,7 @@ export default function Dashboard(props) {
       <main className={classes.content}>
         <Container maxWidth="lg" className={classes.container}>
           <Route exact path="/dashboard" component={Profile} />
-          <Route path="/dashboard/recommender" component={Recommender} />
+          <Route path="/dashboard/account" component={Accounts} />
           <Route path="/dashboard/loan" component={Loan} />
           <Route path="/dashboard/loading" component={Loading} />
         </Container>
