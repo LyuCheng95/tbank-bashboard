@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
@@ -14,6 +15,7 @@ import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import { calculateLoanInstallment } from '../tBankApi';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
+import queryString from 'query-string';
 const useStyles = makeStyles(theme => ({
   formControl: {
     margin: theme.spacing(1),
@@ -60,7 +62,7 @@ export default function LoanApplicationPanel() {
   const [amount, setAmount] = React.useState("");
   const [openSuccessAlert, setOpenSuccessAlert] = React.useState(false);
   const [successAlert, setSuccessAlert] = React.useState("");
-
+  const history = useHistory();
   const detailsRef = useRef();
   const placeHolder = { ProductName: "", MinOpeningBalance: 0, PenaltyRate: 0, RepaymentPenaltyThreshold: 0, InterestRate: 0 }
   const gridTextField = (label, value, icon) => {
@@ -86,6 +88,19 @@ export default function LoanApplicationPanel() {
     loanInfo.push(placeHolder);
     setLoanInfo(loanInfo);
   }, [])
+  useEffect(() => {
+    if (loanInfo) {
+      if (queryString.parse(history.location.search).type) {
+        setLoanType(queryString.parse(history.location.search).type);
+      }
+      if (queryString.parse(history.location.search).amount) {
+        setAmount(queryString.parse(history.location.search).amount);
+      }
+      if (queryString.parse(history.location.search).term) {
+        setPeriod(queryString.parse(history.location.search).term);
+      }
+    }
+  }, [loanInfo])
   const handleChangeLoan = v => {
     setLoanType(v);
   };

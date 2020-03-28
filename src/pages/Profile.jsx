@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
     color: '#777',
     transform: 'translateY(-43px)'
   },
-  graphTitle:{
+  graphTitle: {
     fontSize: "20px",
     textAlign: "center",
     fontFamily: "Roboto Slab",

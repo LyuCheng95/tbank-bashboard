@@ -69,6 +69,20 @@ const applyForLoan = async (userID, PIN, OTP, loanAmount, loanPurpose, productID
   return data;
 };
 
+const getTransactionHistory = async (userID, PIN, OTP, accountID, startDate, endDate, numRecordsPerPage, pageNum) => {
+  const headerStr = JSON.stringify({ serviceName: "getTransactionHistory", userID: userID, PIN: PIN, OTP: OTP });
+  const contentStr = JSON.stringify({
+    "accountID": accountID,
+    "startDate": startDate,
+    "endDate": endDate,
+    "numRecordsPerPage": numRecordsPerPage,
+    "pageNum": pageNum,
+  });
+  const response = await axios.post(serverEndPoint + "Header=" + headerStr + "&Content=" + contentStr);
+  const data = await response.data;
+  return data;
+};
+
 export {
   requestOTP,
   loginCustomer,
@@ -77,5 +91,6 @@ export {
   getCustomerAccounts,
   getAllProductDetails,
   calculateLoanInstallment,
-  applyForLoan
+  applyForLoan,
+  getTransactionHistory,
 };

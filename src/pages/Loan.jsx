@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import Card from '@material-ui/core/Card';
 import { makeStyles } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
@@ -8,13 +9,15 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import LoanApplicationPanel from '../components/LoanApplicationPanel';
 import LoanRepaymentPanel from '../components/LoanRepaymentPanel';
+import queryString from 'query-string';
+
 const useStyles = makeStyles(theme => ({
   loanCard: {
     marginTop: "80px",
     overflow: "visible",
     borderRadius: "40px",
   },
-  tabs:{
+  tabs: {
     height: "60px"
   }
 }))
@@ -41,6 +44,7 @@ function a11yProps(index) {
 }
 export default function Loan() {
   const [value, setValue] = React.useState(0);
+  const history = useHistory();
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -59,7 +63,7 @@ export default function Loan() {
           className={classes.tabs}
         >
           <Tab label="Loan Application" {...a11yProps(0)} />
-          <Tab label="Loan Repayment" {...a11yProps(1)} />
+          {/* <Tab label="Loan Repayment" {...a11yProps(1)} /> */}
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>

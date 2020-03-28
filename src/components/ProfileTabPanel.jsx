@@ -97,6 +97,20 @@ export default function ProfileTabPanel() {
       </Grid>
     );
   }
+  const profile = JSON.parse(sessionStorage.getItem('profile'));
+  const gender = profile.profile.gender === 'M' ? 'Male' : 'Female';
+  const occupation = profile.profile.occupation;
+  const nationality = profile.profile.nationality;
+  const ethnicGroup = profile.profile.ethnicGroup;
+  const dateOfBirth = profile.ethnicGroup;
+  const localNumber = profile.cellphone.phoneNumber;
+  const countryCode = profile.cellphone.countryCode;
+  const email = profile.profile.email;
+  const fax = profile.profile.fax ? profile.profile.fax : '';
+  const address1 = profile.address.streetAddress1;
+  const address2 = profile.address.streetAddress2;
+  const country = profile.address.country;
+  const postalCode = profile.address.postalCode;
   return (
     <div className={classes.root}>
       <AppBar position="static" color="default">
@@ -124,27 +138,27 @@ export default function ProfileTabPanel() {
             <Grid item >
               <Grid container direction='row' justify='space-around'>
                 <Grid item xs={5}>
-                  {gridTextField('Gender', 'Male', <WCIcon />)}
+                  {gridTextField('Gender', gender, <WCIcon />)}
                 </Grid>
                 <Grid item xs={5}>
-                  {gridTextField('Occupation', 'Student', <WorkIcon />)}
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item>
-              <Grid container direction='row' justify='space-around'>
-                <Grid item xs={5}>
-                  {gridTextField('Nationality', 'Chinese', <FaceIcon />)}
-                </Grid>
-                <Grid item xs={5}>
-                  {gridTextField('Ethnic Group', 'Chinese', <SupervisorAccountIcon />)}
+                  {gridTextField('Occupation', occupation, <WorkIcon />)}
                 </Grid>
               </Grid>
             </Grid>
             <Grid item>
               <Grid container direction='row' justify='space-around'>
                 <Grid item xs={5}>
-                  {gridTextField('Date of Birth', '03/18/95', <EventIcon />)}
+                  {gridTextField('Nationality', nationality, <FaceIcon />)}
+                </Grid>
+                <Grid item xs={5}>
+                  {gridTextField('Ethnic Group', ethnicGroup, <SupervisorAccountIcon />)}
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item>
+              <Grid container direction='row' justify='space-around'>
+                <Grid item xs={5}>
+                  {gridTextField('Date of Birth', dateOfBirth, <EventIcon />)}
                 </Grid>
               </Grid>
             </Grid>
@@ -153,32 +167,32 @@ export default function ProfileTabPanel() {
         <TabPanel value={value} index={1} dir={theme.direction}>
           <Grid container direction='column' spacing={2} alignItems="center">
             <Grid item >
-              {gridTextField('Local Number', '93411789', <PhoneIcon />)}
+              {gridTextField('Local Number', localNumber, <PhoneIcon />)}
             </Grid>
             <Grid item >
-              {gridTextField('Country Code', '+65', <DialpadIcon />)}
+              {gridTextField('Country Code', countryCode, <DialpadIcon />)}
             </Grid>
             <Grid item >
-              {gridTextField('Email', 'lyuch000@gmail.com', <EmailIcon />)}
+              {gridTextField('Email', email, <EmailIcon />)}
             </Grid>
             <Grid item >
-              {gridTextField('Fax', '', <PrintIcon />)}
+              {gridTextField('Fax', fax, <PrintIcon />)}
             </Grid>
           </Grid>
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
           <Grid container direction='column' spacing={2} alignItems="center">
             <Grid item >
-              {gridTextField('Address', 'Li Hwan', <BusinessIcon />)}
+              {gridTextField('Address', address1, <BusinessIcon />)}
             </Grid>
             <Grid item >
-              {gridTextField('Address', 'Terrace', <BusinessIcon />)}
+              {gridTextField('Address', address2, <BusinessIcon />)}
             </Grid>
             <Grid item >
-              {gridTextField('Country', 'Singapore', <PlaceIcon />)}
+              {gridTextField('Country', country, <PlaceIcon />)}
             </Grid>
             <Grid item >
-              {gridTextField('Postal Code', '556980', <EmailIcon />)}
+              {gridTextField('Postal Code', postalCode, <EmailIcon />)}
             </Grid>
           </Grid>
         </TabPanel>
