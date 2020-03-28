@@ -118,7 +118,6 @@ export default function LoanApplicationPanel(props) {
       }
     }
   }, [loanInfo])
->>>>>>> recommendation
   const handleChangeLoan = v => {
     setLoanType(v);
     ltvRef.current = loanInfo.filter(type => type.ProductName === v)[0].MaxLtvRatio

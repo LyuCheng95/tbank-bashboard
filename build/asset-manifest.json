@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/static/css/main.5ecd60fb.chunk.css",
+    "main.js": "/static/js/main.48abe5cf.chunk.js",
+    "main.js.map": "/static/js/main.48abe5cf.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.3d3a3acd.js",
+    "runtime-main.js.map": "/static/js/runtime-main.3d3a3acd.js.map",
+    "static/js/2.aa74ff63.chunk.js": "/static/js/2.aa74ff63.chunk.js",
+    "static/js/2.aa74ff63.chunk.js.map": "/static/js/2.aa74ff63.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.fef2868985927202b9782326d091f3b4.js": "/precache-manifest.fef2868985927202b9782326d091f3b4.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.5ecd60fb.chunk.css.map": "/static/css/main.5ecd60fb.chunk.css.map",
+    "static/js/2.aa74ff63.chunk.js.LICENSE": "/static/js/2.aa74ff63.chunk.js.LICENSE",
+    "static/media/LoanService.jpg": "/static/media/LoanService.ad3b0fcf.jpg",
+    "static/media/PersonalProfile.jpg": "/static/media/PersonalProfile.7d2c90d4.jpg",
+    "static/media/RecommendationEngine.jpg": "/static/media/RecommendationEngine.12388174.jpg",
+    "static/media/landing-bg.jpg": "/static/media/landing-bg.df8fd3ef.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.3d3a3acd.js",
+    "static/js/2.aa74ff63.chunk.js",
+    "static/css/main.5ecd60fb.chunk.css",
+    "static/js/main.48abe5cf.chunk.js"
+  ]
+}
