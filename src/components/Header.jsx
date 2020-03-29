@@ -215,7 +215,7 @@ export default function Header(props) {
                     <MonetizationOnIcon />
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary="Promotion" secondary="home loan" />
+                <ListItemText primary="Promotion" secondary="Home Loan" />
               </ListItem>
               <ListItem button>
                 <ListItemAvatar>
@@ -223,7 +223,7 @@ export default function Header(props) {
                     <AccountBalanceIcon />
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary="XXX" secondary="XXXX" />
+                <ListItemText primary="Investment" secondary="Top Choice" />
               </ListItem>
             </List>
           </Popover>

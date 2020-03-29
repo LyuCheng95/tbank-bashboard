@@ -106,9 +106,11 @@ export default function LoanApplicationPanel(props) {
     accountsRef.current = JSON.parse(sessionStorage.getItem("accounts"))
   }, [])
   useEffect(() => {
-    if (loanInfo) {
-      if (queryString.parse(history.location.search).type) {
-        setLoanType(queryString.parse(history.location.search).type);
+    if (loanInfo.length > 0) {
+      const urlType = queryString.parse(history.location.search).type;
+      if (urlType) {
+        setLoanType(urlType);
+        ltvRef.current = loanInfo.filter(type => type.ProductName === urlType)[0].MaxLtvRatio
       }
       if (queryString.parse(history.location.search).amount) {
         setAmount(queryString.parse(history.location.search).amount);
@@ -191,7 +193,7 @@ export default function LoanApplicationPanel(props) {
       }
     })
   };
-  console.log(accountsRef.current)
+
   return (
     <>
       <Grid container direction="column" spacing={10}>
