@@ -139,7 +139,7 @@ export default function LandingPage(props) {
         <div className={classes.container}>
           <Grid container className={classes.titleContainer}>
             <Grid item xs={12} sm={12} md={6}>
-              <h1 className={classes.title}>Your Personalised Recommender</h1>
+              <h1 className={classes.title}>DigitaliseNow</h1>
               <h4>
                 Provide personal, intelligent recommendations.
               </h4>
