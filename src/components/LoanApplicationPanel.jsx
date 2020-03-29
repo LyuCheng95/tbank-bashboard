@@ -199,9 +199,7 @@ export default function LoanApplicationPanel(props) {
           <Grid container direction="row" justify="space-evenly" >
             <Grid item>
               <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel>
-                  Loan Type
-              </InputLabel>
+                <InputLabel>Loan Type</InputLabel>
                 <Select
                   labelWidth={80}
                   value={loanType}
@@ -219,11 +217,11 @@ export default function LoanApplicationPanel(props) {
             </Grid>
             <Grid item>
               <TextField
-                error={!(amount > 100000 || amount === "")}
+                error={!(amount > 1000 || amount === "")}
                 value={amount}
                 onChange={e => setAmount(e.target.value)}
                 label="Loan Amount"
-                helperText={amount > 100000 || amount === "" ? "" : "Loan amount is no less than 100,000"}
+                helperText={amount > 1000 || amount === "" ? "" : "Loan amount is no less than 1,000"}
                 variant="outlined"
               />
             </Grid>
@@ -242,7 +240,7 @@ export default function LoanApplicationPanel(props) {
                 variant="contained"
                 size="large"
                 color="secondary"
-                disabled={period >= 360 || amount < 100000 || period === "" || amount === "" || loanType === ""}
+                disabled={period >= 360 || amount < 1000 || period === "" || amount === "" || loanType === ""}
                 onClick={() => handleCalculateInstallment()}
                 className={classes.calculateInstallmentButton}
               >
@@ -294,6 +292,10 @@ export default function LoanApplicationPanel(props) {
                 <Grid item>
                   <TextField
                     value={monthlyInstallment}
+                    error={monthlyInstallment > 1650}
+                    helperText={
+                      monthlyInstallment > 1650 ? 'Your monthly installment cannot exceed 1650' : null
+                    }
                     label="Monthly Installment"
                     InputProps={{
                       readOnly: true,
@@ -381,7 +383,7 @@ export default function LoanApplicationPanel(props) {
                 color="secondary"
                 disabled={
                   !loanType ||
-                  amount < 100000 ||
+                  amount < 1000 ||
                   period > 360 ||
                   !period ||
                   !loanTitle ||

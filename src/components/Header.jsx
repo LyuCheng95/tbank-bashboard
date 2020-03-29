@@ -18,8 +18,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
-import ImageIcon from '@material-ui/icons/Image';
-import WorkIcon from '@material-ui/icons/Work';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import BeachAccessIcon from '@material-ui/icons/BeachAccess';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
@@ -180,16 +178,18 @@ export default function Header(props) {
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             IS444
           </Typography>
-          <IconButton color="inherit"
-            className={classes.alertButton}
-            onClick={event => {
-              setAnchorEl(anchorEl ? null : event.currentTarget);
-            }}
-          >
-            <Badge badgeContent={2} color='error'>
-              <NotificationImportantIcon />
-            </Badge>
-          </IconButton>
+          {history.location.pathname !== '/' ? (
+            <IconButton color="inherit"
+              className={classes.alertButton}
+              onClick={event => {
+                setAnchorEl(anchorEl ? null : event.currentTarget);
+              }}
+            >
+              <Badge badgeContent={2} color='error'>
+                <NotificationImportantIcon />
+              </Badge>
+            </IconButton>
+          ) : null}
           <Popover
             open={Boolean(anchorEl)}
             anchorEl={anchorEl}
@@ -207,7 +207,7 @@ export default function Header(props) {
               <ListItem
                 button
                 onClick={() => {
-                  history.push('/dashboard/loan?type=Home Loan&amount=15000000&term=12')
+                  history.push('/dashboard/loan?type=Home Loan&amount=10000&term=12')
                 }}
               >
                 <ListItemAvatar>
